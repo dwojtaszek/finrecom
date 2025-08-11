@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '../../../../lib/prisma';
-import { analyzeRecommendation } from '../../../../lib/analysis';
+import { prisma } from '../../../../../lib/prisma';
+import { analyzeRecommendation } from '../../../../../lib/analysis';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
 ) {
   try {
-    const id = parseInt(params.id);
+    const id = parseInt(context.params.id);
     const recommendation = await prisma.recommendation.findUnique({
       where: { id },
     });

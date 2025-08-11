@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { ticker: string } }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
 ) {
-  const ticker = params.ticker;
+  const ticker = context.params.ticker;
   const apiKey = process.env.ALPHA_VANTAGE_API_KEY;
 
   if (!apiKey || apiKey === 'YOUR_API_KEY') {

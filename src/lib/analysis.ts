@@ -27,11 +27,19 @@ export async function analyzeRecommendation(
     throw new Error(data['Error Message']);
   }
 
+  type TimeSeriesData = {
+  '1. open': string;
+  '2. high': string;
+  '3. low': string;
+  '4. close': string;
+  '5. volume': string;
+};
+
   const timeSeries = data['Time Series (Daily)'];
   const priceHistory = Object.entries(timeSeries)
-    .map(([date, values]: [string, any]) => ({
+    .map(([date, values]) => ({
       date,
-      price: parseFloat(values['4. close']),
+      price: parseFloat((values as TimeSeriesData)['4. close']),
     }))
     .filter(
       (item) => new Date(item.date) >= new Date(recommendation.recommendationDate)
